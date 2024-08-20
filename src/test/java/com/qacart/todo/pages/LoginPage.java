@@ -15,6 +15,8 @@ public class LoginPage extends BasePage {
     private WebElement passwordInput;
     @FindBy(css = "[data-testid=\"submit\"]")
     private WebElement loginSubmitButton;
+    @FindBy(css = "[data-testid=\"welcome\"]")
+    private WebElement welcomeMessage;
 
 public void load(){
     driver.get("https://todo.qacart.com/login");
@@ -24,4 +26,5 @@ public void load(){
     passwordInput.sendKeys(password);
     loginSubmitButton.click();
 }
+
 }
