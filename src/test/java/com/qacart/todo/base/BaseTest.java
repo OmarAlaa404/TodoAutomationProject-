@@ -7,12 +7,14 @@ import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
     protected WebDriver driver;
+
     @BeforeMethod
-    public void setup(){
+    public void setup() {
         driver = new DriverFactory().initializeDriver();
     }
+
     @AfterMethod
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 }

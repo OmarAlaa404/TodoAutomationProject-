@@ -9,6 +9,7 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
     }
+
     @FindBy(css = "[data-testid=\"email\"]")
     private WebElement emailInput;
     @FindBy(css = "[data-testid=\"password\"]")
@@ -18,13 +19,16 @@ public class LoginPage extends BasePage {
     @FindBy(css = "[data-testid=\"welcome\"]")
     private WebElement welcomeMessage;
 
-public void load(){
-    driver.get("https://todo.qacart.com/login");
-}
-    public void login (String email , String password){
-    emailInput.sendKeys(email);
-    passwordInput.sendKeys(password);
-    loginSubmitButton.click();
-}
+    public LoginPage load() {
+        driver.get("https://todo.qacart.com/login");
+        return this;
+    }
+
+    public TodoPage login(String email, String password) {
+        emailInput.sendKeys(email);
+        passwordInput.sendKeys(password);
+        loginSubmitButton.click();
+        return new TodoPage(driver);
+    }
 
 }

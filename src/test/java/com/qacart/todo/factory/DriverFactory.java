@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
 public class DriverFactory {
-    public WebDriver initializeDriver(){
+    public WebDriver initializeDriver() {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.manage().window().maximize();

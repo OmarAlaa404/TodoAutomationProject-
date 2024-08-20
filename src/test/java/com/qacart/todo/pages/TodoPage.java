@@ -22,20 +22,25 @@ public class TodoPage extends BasePage {
     private WebElement noTodoMessage;
 
 
-
-    public boolean isWelcomeMessageDisplayed (){
+    public boolean isWelcomeMessageDisplayed() {
         return welcomeMessage.isDisplayed();
     }
-    public void clickOnAddNewTodoButton(){
+
+    public NewTodoPage clickOnAddNewTodoButton() {
         addNewTodoButton.click();
+        return new NewTodoPage(driver);
     }
-    public String getTodoText(){
+
+    public String getTodoText() {
         return todoItem.getText();
     }
-    public void clickOnDeleteTodoButton(){
+
+    public TodoPage clickOnDeleteTodoButton() {
         deleteTodoButton.click();
+        return this;
     }
-    public boolean isNoTodoMessageDisplayed (){
+
+    public boolean isNoTodoMessageDisplayed() {
         return noTodoMessage.isDisplayed();
     }
 }
