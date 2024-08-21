@@ -6,15 +6,23 @@ import com.qacart.todo.utils.ConfigUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * LoginTest class contains test case for logging in with email and password.
+ */
 public class LoginTest extends BaseTest {
+
     @Test
-    public void ShouldBeAbleToLoginWithEmailAndPassword() {
-        LoginPage loginPage = new LoginPage(driver);
-        boolean isWelcomeDisplayed =
-                loginPage
-                        .load()
-                        .login(ConfigUtils.getInstance().getEmail(), ConfigUtils.getInstance().getPassword())
-                        .isWelcomeMessageDisplayed();
-        Assert.assertTrue(isWelcomeDisplayed);
+    public void shouldBeAbleToLoginWithEmailAndPassword() {
+        try {
+            LoginPage loginPage = new LoginPage();
+            boolean isWelcomeDisplayed =
+                    loginPage
+                            .load()
+                            .login(ConfigUtils.getInstance().getEmail(), ConfigUtils.getInstance().getPassword())
+                            .isWelcomeMessageDisplayed();
+            Assert.assertTrue(isWelcomeDisplayed, "Welcome message should be displayed.");
+        } catch (Exception e) {
+            throw new RuntimeException("Test failed: Unable to login with email and password.", e);
+        }
     }
 }

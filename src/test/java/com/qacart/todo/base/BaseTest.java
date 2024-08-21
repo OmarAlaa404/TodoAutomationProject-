@@ -1,20 +1,35 @@
 package com.qacart.todo.base;
 
 import com.qacart.todo.factory.DriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+/**
+ * BaseTest class sets up and tears down the WebDriver for test methods.
+ */
 public class BaseTest {
-    protected WebDriver driver;
 
+    /**
+     * Initializes WebDriver before each test method.
+     */
     @BeforeMethod
     public void setup() {
-        driver = new DriverFactory().initializeDriver();
+        try {
+            new DriverFactory().initializeDriver();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to initialize WebDriver.", e);
+        }
     }
 
+    /**
+     * Quits WebDriver after each test method.
+     */
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+        try {
+            new DriverFactory().quitDriver();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to quit WebDriver.", e);
+        }
     }
 }
