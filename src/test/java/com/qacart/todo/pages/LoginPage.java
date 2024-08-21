@@ -1,9 +1,13 @@
 package com.qacart.todo.pages;
 
 import com.qacart.todo.base.BasePage;
+import com.qacart.todo.utilities.ConfigUtils;
+import com.qacart.todo.utilities.PropertiesUtil;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.Properties;
 
 public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
@@ -20,7 +24,7 @@ public class LoginPage extends BasePage {
     private WebElement welcomeMessage;
 
     public LoginPage load() {
-        driver.get("https://todo.qacart.com/login");
+        driver.get(ConfigUtils.getInstance().getBaseURL());
         return this;
     }
 
