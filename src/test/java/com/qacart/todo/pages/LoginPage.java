@@ -1,13 +1,10 @@
 package com.qacart.todo.pages;
 
 import com.qacart.todo.base.BasePage;
-import com.qacart.todo.utilities.ConfigUtils;
-import com.qacart.todo.utilities.PropertiesUtil;
+import com.qacart.todo.utils.ConfigUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.Properties;
 
 public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {

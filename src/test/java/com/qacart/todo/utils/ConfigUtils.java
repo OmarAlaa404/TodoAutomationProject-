@@ -1,4 +1,4 @@
-package com.qacart.todo.utilities;
+package com.qacart.todo.utils;
 
 import java.util.Properties;
 
@@ -8,7 +8,17 @@ public class ConfigUtils {
     private static Properties properties;
 
     private ConfigUtils() {
-        properties = PropertiesUtil.loadProperties("src/test/java/com/qacart/todo/config/application-test.properties");
+        String env = System.getProperty("env", "TEST").toUpperCase();  // Default to "TEST" and convert to uppercase
+        switch (env) {
+            case "PRODUCTION":
+                properties = PropertiesUtil.loadProperties("src/test/java/com/qacart/todo/config/application-Production.properties");
+                break;
+            case "TEST":
+                properties = PropertiesUtil.loadProperties("src/test/java/com/qacart/todo/config/application-test.properties");
+                break;
+            default:
+                throw new RuntimeException("Environment is not supported");
+        }
     }
 
     public static ConfigUtils getInstance() {

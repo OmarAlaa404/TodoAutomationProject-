@@ -1,4 +1,4 @@
-package com.qacart.todo.utilities;
+package com.qacart.todo.utils;
 
 import java.io.*;
 import java.util.Properties;
