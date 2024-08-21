@@ -66,6 +66,20 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!-- Java Faker for generating fake data -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!-- Upgraded SnakeYAML for YAML parsing -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.2</version> <!-- Upgraded to 2.0 to mitigate vulnerabilities -->
+        </dependency>
+
     </dependencies>
 
     <build>
