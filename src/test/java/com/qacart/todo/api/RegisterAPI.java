@@ -1,15 +1,19 @@
 package com.qacart.todo.api;
 
+import com.qacart.todo.config.EndPoint;
 import com.qacart.todo.objects.User;
 import com.qacart.todo.utils.UserUtils;
+import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 public class RegisterAPI {
 
-    private Cookies restAssuredCookies;
+    private List<Cookie> restAssuredCookies;
     private String accessToken;
     private String userId;
     private String firstName;  // Attribute to store the user's first name
@@ -20,7 +24,7 @@ public class RegisterAPI {
     }
 
     // Getter for restAssuredCookies
-    public Cookies getRestAssuredCookies() {
+    public List<Cookie> getRestAssuredCookies() {
         return this.restAssuredCookies;
     }
 
@@ -47,14 +51,14 @@ public class RegisterAPI {
                 .body(randomUser)
                 .log().all()  // Log all request details
                 .when()
-                .post("/api/v1/users/register")  // API endpoint for user registration
+                .post(EndPoint.API_REGISTER_ENDPOINT)  // API endpoint for user registration
                 .then()
                 .log().all()  // Log all response details
                 .assertThat().statusCode(201)  // Assert that the status code is 201 (Created)
                 .extract().response();
 
         // Extract information from response
-        restAssuredCookies = response.getDetailedCookies();
+        restAssuredCookies = response.getDetailedCookies().asList();
         accessToken = response.path("access_token");
         userId = response.path("userID");
         firstName = response.path("firstName");
