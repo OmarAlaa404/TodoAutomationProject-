@@ -2,6 +2,7 @@ package com.qacart.todo.pages;
 
 import com.qacart.todo.base.BasePage;
 import com.qacart.todo.utils.ConfigUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -19,10 +20,7 @@ public class LoginPage extends BasePage {
     @FindBy(css = "[data-testid=\"welcome\"]")
     private WebElement welcomeMessage;
 
-    /**
-     * Loads the login page.
-     * @return this LoginPage instance.
-     */
+    @Step("Load the login page")
     public LoginPage load() {
         try {
             driver.get(ConfigUtils.getInstance().getBaseURL());
@@ -32,12 +30,7 @@ public class LoginPage extends BasePage {
         }
     }
 
-    /**
-     * Performs login action and navigates to TodoPage.
-     * @param email User's email.
-     * @param password User's password.
-     * @return instance of TodoPage.
-     */
+    @Step("Login with email: {0} and password: {1}")
     public TodoPage login(String email, String password) {
         try {
             emailInput.sendKeys(email);

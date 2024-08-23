@@ -3,6 +3,7 @@ package com.qacart.todo.pages;
 import com.qacart.todo.base.BasePage;
 import com.qacart.todo.utils.ConfigUtils;
 import com.qacart.todo.config.EndPoint;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -26,27 +27,18 @@ public class TodoPage extends BasePage {
     @FindBy(css = "[data-testid=\"no-todos\"]")
     private WebElement noTodoMessage;
 
-    /**
-     * Loads the Todo page by navigating to the specified endpoint.
-     * @return this TodoPage instance.
-     */
+    @Step("Load the Todo page")
     public TodoPage load() {
         driver.get(ConfigUtils.getInstance().getBaseURL() + EndPoint.TODO_PAGE_ENDPOINT);
         return this;
     }
 
-    /**
-     * Checks if the welcome message is displayed.
-     * @return true if welcome message is displayed, false otherwise.
-     */
+    @Step("Check if the welcome message is displayed")
     public boolean isWelcomeMessageDisplayed() {
         return welcomeMessage.isDisplayed();
     }
 
-    /**
-     * Clicks on the 'Add New Todo' button and navigates to NewTodoPage.
-     * @return instance of NewTodoPage.
-     */
+    @Step("Click on the 'Add New Todo' button")
     public NewTodoPage clickOnAddNewTodoButton() {
         try {
             addNewTodoButton.click();
@@ -56,10 +48,7 @@ public class TodoPage extends BasePage {
         }
     }
 
-    /**
-     * Gets the text of the todo item.
-     * @return Text of the todo item.
-     */
+    @Step("Get the text of the todo item")
     public String getTodoText() {
         try {
             return todoItem.getText();
@@ -68,10 +57,7 @@ public class TodoPage extends BasePage {
         }
     }
 
-    /**
-     * Clicks on the delete todo button and remains on the same page.
-     * @return this TodoPage instance.
-     */
+    @Step("Click on the delete todo button")
     public TodoPage clickOnDeleteTodoButton() {
         try {
             deleteTodoButton.click();
@@ -81,10 +67,7 @@ public class TodoPage extends BasePage {
         }
     }
 
-    /**
-     * Checks if the 'No Todos' message is displayed.
-     * @return true if 'No Todos' message is displayed, false otherwise.
-     */
+    @Step("Check if the 'No Todos' message is displayed")
     public boolean isNoTodoMessageDisplayed() {
         return noTodoMessage.isDisplayed();
     }

@@ -80,19 +80,86 @@
             <version>2.2</version> <!-- Upgraded to 2.0 to mitigate vulnerabilities -->
         </dependency>
 
+        <!-- Allure TestNG for reporting -->
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.29.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+
+        <!-- AspectJ Weaver for AOP support -->
+        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.22.1</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Maven Surefire Plugin for running tests -->
+            <!-- The Surefire Plugin is used during the test phase of the build lifecycle to execute the unit tests of an application. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <!-- JVM Options for memory management and AspectJ weaving -->
+                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar" -Xmx1024m -XX:MaxPermSize=256m</argLine>
+
+                    <!-- Run tests in parallel to speed up execution -->
+                    <parallel>methods</parallel>
+                    <threadCount>4</threadCount>
+                    <useUnlimitedThreads>false</useUnlimitedThreads> <!-- Prevents the use of unlimited threads -->
+
+                    <!-- Fail fast to stop the build on the first failure -->
+                    <failIfNoTests>true</failIfNoTests>
+                    <testFailureIgnore>false</testFailureIgnore>
+
+                    <!-- Enable rerun failing tests -->
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+
+                    <!-- Configure reports -->
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+
+                    <!-- Set the time-out for tests to avoid hanging tests -->
+                    <forkedProcessTimeoutInSeconds>300</forkedProcessTimeoutInSeconds> <!-- Adjust as needed -->
+
+                    <!-- Enable the reuse of forks to optimize performance -->
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+
+                    <!-- Includes and excludes for better control over which tests to run -->
+                    <includes>
+                        <include>**/*Test.java</include> <!-- Run all classes ending with 'Test' -->
+                    </includes>
+                    <excludes>
+                        <exclude>**/Abstract*.java</exclude> <!-- Exclude abstract test classes -->
+                    </excludes>
+
+                    <!-- Enable verbose output for better debugging -->
+                    <printSummary>true</printSummary>
+                </configuration>
+            </plugin>
+
+            <!-- Versions Maven Plugin for dependency version management -->
+            <!-- The Versions Plugin helps you manage the versions of artifacts in your project's POM. -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.10.0</version>
                 <configuration>
-                    <!-- Optional: Automatically update parent versions as well -->
-                    <processParent>true</processParent>
-                    <!-- Optional: Include snapshot versions in the updates -->
-                    <allowSnapshots>true</allowSnapshots>
+                    <processParent>true</processParent> <!-- Optional: Automatically update parent versions as well -->
+                    <allowSnapshots>true</allowSnapshots> <!-- Optional: Include snapshot versions in the updates -->
                 </configuration>
             </plugin>
         </plugins>
