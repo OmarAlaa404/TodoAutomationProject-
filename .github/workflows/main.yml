@@ -2,15 +2,15 @@ name: Run Selenium Tests on Chrome, Edge, and Firefox
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main"]  # Changed to "main" to match your repository branch
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Change to Windows runner for Edge support
 
     strategy:
       matrix:
-        browser: [chrome, edge, firefox]  # Specify the browsers you want to test on
+        browser: [chrome, edge, firefox]  # Testing on Chrome, Edge, and Firefox
 
     steps:
       - name: Checkout Repository
@@ -24,12 +24,12 @@ jobs:
           distribution: "temurin"
 
       - name: Set up ${{ matrix.browser }} Browser
+        if: matrix.browser == 'chrome' || matrix.browser == 'edge'
         uses: browser-actions/setup-${{ matrix.browser }}@latest
-        if: matrix.browser != 'firefox'
 
       - name: Set up Firefox
-        uses: browser-actions/setup-firefox@v1
         if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-firefox@v1
 
       - name: Run Maven Tests on ${{ matrix.browser }}
         env:
