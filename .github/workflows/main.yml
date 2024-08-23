@@ -1,37 +1,18 @@
-name: Run Selenium Tests on Chrome, Edge, and Firefox
+name: Run Selenium Test
 
 on:
   push:
-    branches: ["main"]  # Changed to "main" to match your repository branch
+    branches: ["main"]
 
 jobs:
   test:
-    runs-on: windows-latest  # Change to Windows runner for Edge support
-
-    strategy:
-      matrix:
-        browser: [chrome, edge, firefox]  # Testing on Chrome, Edge, and Firefox
-
+    runs-on: windows-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
           java-version: "11"
           cache: maven
           distribution: "temurin"
-
-      - name: Set up ${{ matrix.browser }} Browser
-        if: matrix.browser == 'chrome' || matrix.browser == 'edge'
-        uses: browser-actions/setup-${{ matrix.browser }}@latest
-
-      - name: Set up Firefox
-        if: matrix.browser == 'firefox'
-        uses: browser-actions/setup-firefox@v1
-
-      - name: Run Maven Tests on ${{ matrix.browser }}
-        env:
-          BROWSER: ${{ matrix.browser }}
-        run: mvn clean test
+      - uses: browser-actions/setup-chrome@latest
+      - run: mvn clean test
