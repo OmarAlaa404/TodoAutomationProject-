@@ -30,7 +30,7 @@ public class BaseTest {
     @Step("Initialize WebDriver before test method")
     public void setup() {
         try {
-            new DriverFactory().initializeDriver();
+            DriverFactory.getInstance().initializeDriver();
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize WebDriver.", e);
         }
@@ -44,6 +44,9 @@ public class BaseTest {
     @Step("Take a screenshot")
     public void takeScreenshot(File destFile) {
         WebDriver driver = DriverFactory.getDriver();
+        if (driver == null) {
+            throw new IllegalStateException("WebDriver is not initialized. Cannot take screenshot.");
+        }
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             org.apache.commons.io.FileUtils.copyFile(file, destFile);
@@ -68,7 +71,7 @@ public class BaseTest {
         takeScreenshot(destFile);
 
         // Quit the WebDriver
-        DriverFactory.getDriver().quit();
+        DriverFactory.getInstance().quitDriver();
     }
 
     /**
@@ -79,8 +82,12 @@ public class BaseTest {
     @Step("Inject cookies into browser")
     public void injectCookiesToBrowser(List<Cookie> restAssuredCookies) {
         List<org.openqa.selenium.Cookie> seleniumCookies = CookieUtils.convertRestAssureCookiesToSeleniumCookies(restAssuredCookies);
+        WebDriver driver = DriverFactory.getDriver();
+        if (driver == null) {
+            throw new IllegalStateException("WebDriver is not initialized. Cannot inject cookies.");
+        }
         for (org.openqa.selenium.Cookie cookie : seleniumCookies) {
-            DriverFactory.getDriver().manage().addCookie(cookie);
+            driver.manage().addCookie(cookie);
         }
     }
 }

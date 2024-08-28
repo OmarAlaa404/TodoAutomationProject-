@@ -3,10 +3,20 @@ package com.qacart.todo.utils;
 import com.github.javafaker.Faker;
 import com.qacart.todo.objects.User;
 
+/**
+ * UserUtils class provides utility methods for generating random User objects.
+ * It uses the Faker library to create realistic random data for testing purposes.
+ */
 public class UserUtils {
 
+    private static final Faker faker = new Faker();
+
+    /**
+     * Generates a random User object with a first name, last name, email, and password.
+     *
+     * @return a User object populated with random data.
+     */
     public User generateRandomUser() {
-        Faker faker = new Faker();
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = faker.internet().emailAddress();

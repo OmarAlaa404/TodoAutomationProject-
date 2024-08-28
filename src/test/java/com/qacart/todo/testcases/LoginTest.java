@@ -10,9 +10,17 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * LoginTest class contains test cases for verifying the login functionality.
+ * The tests ensure that users can log in with valid credentials and that the correct page elements are displayed.
+ */
 @Feature("Authentication")
 public class LoginTest extends BaseTest {
 
+    /**
+     * Verifies that a user can log in with valid email and password.
+     * This test checks if the welcome message is displayed after a successful login.
+     */
     @Test(description = "Test Login Functionality With Valid Email and Password")
     @Story("Login with valid credentials")
     @Description("This test verifies that a user can log in with valid email and password.")
@@ -26,6 +34,12 @@ public class LoginTest extends BaseTest {
         }
     }
 
+    /**
+     * Performs the login action with valid credentials and checks if the welcome message is displayed.
+     *
+     * @param loginPage the LoginPage object to interact with the login page.
+     * @return true if the welcome message is displayed, false otherwise.
+     */
     @Step("Log in with valid email and password")
     private boolean loginWithValidCredentials(LoginPage loginPage) {
         return loginPage
